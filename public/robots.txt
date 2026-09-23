@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://catane.in/sitemap.xml
+Sitemap: https://catane.catane-labs.workers.dev/sitemap.xml
