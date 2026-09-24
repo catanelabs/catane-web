@@ -1,7 +1,17 @@
 import React from 'react';
 import HeroCanvas from './HeroCanvas';
+import { trackCTAClick } from '../utils/analytics';
 
 export default function Hero({ onOpenModal }) {
+  const handlePrimaryCTA = () => {
+    trackCTAClick('Start a project', 'hero');
+    onOpenModal();
+  };
+
+  const handleSecondaryCTA = () => {
+    trackCTAClick('Explore services', 'hero');
+  };
+
   return (
     <section
       style={{
@@ -98,12 +108,12 @@ export default function Hero({ onOpenModal }) {
               gap: '1.25rem',
             }}
           >
-            <button onClick={onOpenModal} className="btn-primary">
+            <button onClick={handlePrimaryCTA} className="btn-primary">
               <span>Start a project</span>
               <span className="hover-arrow">↗</span>
             </button>
 
-            <a href="#services" className="btn-secondary">
+            <a href="#services" onClick={handleSecondaryCTA} className="btn-secondary">
               <span>Explore services</span>
               <span style={{ transition: 'transform 0.2s ease' }}>↓</span>
             </a>
@@ -114,3 +124,4 @@ export default function Hero({ onOpenModal }) {
     </section>
   );
 }
+

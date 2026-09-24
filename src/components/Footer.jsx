@@ -1,5 +1,6 @@
 import React from 'react';
 import CataneSymbol from './CataneSymbol';
+import { trackNavClick, trackContactChannelClick } from '../utils/analytics';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -26,6 +27,7 @@ export default function Footer() {
           <div>
             <a
               href="#"
+              onClick={() => trackNavClick('logo', 'footer')}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -82,16 +84,32 @@ export default function Footer() {
                 gap: '0.75rem',
               }}
             >
-              <a href="#services" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}>
+              <a
+                href="#services"
+                onClick={() => trackNavClick('Services', 'footer')}
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
+              >
                 Services
               </a>
-              <a href="#process" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}>
+              <a
+                href="#process"
+                onClick={() => trackNavClick('Process', 'footer')}
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
+              >
                 Process
               </a>
-              <a href="#why-catane" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}>
+              <a
+                href="#why-catane"
+                onClick={() => trackNavClick('Why Catane', 'footer')}
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
+              >
                 Why Catane
               </a>
-              <a href="#contact" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}>
+              <a
+                href="#contact"
+                onClick={() => trackNavClick('Contact', 'footer')}
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
+              >
                 Contact
               </a>
             </div>
@@ -123,18 +141,21 @@ export default function Footer() {
                 href="https://wa.me/917603833919?text=Hello%20Catane,%20I'd%20like%20to%20discuss%20a%20project%20for%20my%20business."
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContactChannelClick('whatsapp', 'footer')}
                 style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
               >
                 WhatsApp Direct ↗
               </a>
               <a
                 href="tel:+917603833919"
+                onClick={() => trackContactChannelClick('phone', 'footer')}
                 style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
               >
                 +91 76038 33919 ↗
               </a>
               <a
                 href="mailto:catane.labs@gmail.com"
+                onClick={() => trackContactChannelClick('email', 'footer')}
                 style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9375rem' }}
               >
                 catane.labs@gmail.com ↗
@@ -164,3 +185,4 @@ export default function Footer() {
     </footer>
   );
 }
+

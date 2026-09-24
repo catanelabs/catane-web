@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { trackProcessStepSelect } from '../utils/analytics';
 
 export default function Process() {
   const [activeStep, setActiveStep] = useState(0);
+
+  const handleSelectStep = (index, step) => {
+    setActiveStep(index);
+    trackProcessStepSelect(step.title, step.num);
+  };
 
   const steps = [
     {
@@ -83,8 +89,8 @@ export default function Process() {
             return (
               <div
                 key={step.num}
-                onClick={() => setActiveStep(index)}
-                onMouseEnter={() => setActiveStep(index)}
+                onClick={() => handleSelectStep(index, step)}
+                onMouseEnter={() => handleSelectStep(index, step)}
                 style={{
                   backgroundColor: isActive ? 'var(--bg-card-hover)' : 'var(--bg-card)',
                   border: isActive ? '1px solid var(--border-accent)' : '1px solid var(--border-subtle)',

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { trackConceptWorkView, trackCTAClick } from '../utils/analytics';
 
 export default function ConceptWork({ onOpenModal }) {
   const [activeModalProject, setActiveModalProject] = useState(null);
+
+  const handleOpenConcept = (project, action) => {
+    setActiveModalProject(project);
+    trackConceptWorkView(project.title, action);
+  };
 
   const projects = [
     {

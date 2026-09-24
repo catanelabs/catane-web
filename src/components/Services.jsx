@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
+import { trackServiceSelect, trackCTAClick } from '../utils/analytics';
 
 export default function Services({ onOpenModal }) {
   const [activeService, setActiveService] = useState(0);
+
+  const handleSelectService = (index, service) => {
+    setActiveService(index);
+    trackServiceSelect(service.title, service.id);
+  };
+
+  const handleDiscussService = (service) => {
+    trackCTAClick(`Discuss ${service.title}`, 'services');
+    onOpenModal(`service_${service.id}`);
+  };
 
   const services = [
     {
@@ -119,8 +130,8 @@ export default function Services({ onOpenModal }) {
             return (
               <div
                 key={service.id}
-                onClick={() => setActiveService(index)}
-                onMouseEnter={() => setActiveService(index)}
+                onClick={() => handleSelectService(index, service)}
+                onMouseEnter={() => handleSelectService(index, service)}
                 style={{
                   backgroundColor: isActive ? 'var(--bg-card-hover)' : 'var(--bg-card)',
                   border: isActive ? '1px solid var(--border-accent)' : '1px solid var(--border-subtle)',
@@ -251,7 +262,7 @@ export default function Services({ onOpenModal }) {
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          onOpenModal();
+                          handleDiscussService(service);
                         }}
                         className="btn-primary"
                         style={{

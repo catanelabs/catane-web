@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CataneSymbol from './CataneSymbol';
+import { trackInquirySubmit, trackContactChannelClick } from '../utils/analytics';
 
-export default function ProjectModal({ isOpen, onClose }) {
+export default function ProjectModal({ isOpen, onClose, source = 'unknown' }) {
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
@@ -16,6 +17,9 @@ export default function ProjectModal({ isOpen, onClose }) {
     e.preventDefault();
     if (!formData.name.trim() || !formData.contact.trim()) return;
 
+    trackInquirySubmit('whatsapp', Boolean(formData.message.trim()));
+    trackContactChannelClick('whatsapp', `modal_${source}`);
+
     const text = `Hello Catane,\n\nName / Business: ${formData.name}\nContact: ${formData.contact}\n\nProject Details:\n${formData.message || 'Not specified'}`;
     const whatsappUrl = `https://wa.me/917603833919?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
@@ -25,6 +29,9 @@ export default function ProjectModal({ isOpen, onClose }) {
   const handleSendEmail = (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.contact.trim()) return;
+
+    trackInquirySubmit('email', Boolean(formData.message.trim()));
+    trackContactChannelClick('email', `modal_${source}`);
 
     const subject = `Project Inquiry - ${formData.name}`;
     const body = `Name / Business: ${formData.name}\nContact: ${formData.contact}\n\nProject Details:\n${formData.message || 'Not specified'}`;

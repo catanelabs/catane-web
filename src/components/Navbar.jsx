@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CataneSymbol from './CataneSymbol';
+import { trackNavClick, trackCTAClick } from '../utils/analytics';
 
 export default function Navbar({ onOpenModal }) {
   const [scrolled, setScrolled] = useState(false);
@@ -18,6 +19,19 @@ export default function Navbar({ onOpenModal }) {
     { name: 'Process', href: '#process' },
     { name: 'Why Catane', href: '#why-catane' },
   ];
+
+  const handleLogoClick = () => {
+    trackNavClick('logo', 'navbar');
+  };
+
+  const handleLinkClick = (name) => {
+    trackNavClick(name, 'navbar');
+  };
+
+  const handleCTAClick = () => {
+    trackCTAClick('Start a project', 'navbar');
+    onOpenModal();
+  };
 
   return (
     <header
@@ -45,6 +59,7 @@ export default function Navbar({ onOpenModal }) {
         {/* Brand Logo & Wordmark */}
         <a
           href="#"
+          onClick={handleLogoClick}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -80,6 +95,7 @@ export default function Navbar({ onOpenModal }) {
             <a
               key={link.name}
               href={link.href}
+              onClick={() => handleLinkClick(link.name)}
               style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: '0.875rem',
@@ -98,7 +114,7 @@ export default function Navbar({ onOpenModal }) {
 
         {/* Right Desktop CTA */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }} className="desktop-nav">
-          <button onClick={onOpenModal} className="btn-primary" style={{ padding: '0.625rem 1.25rem', fontSize: '0.875rem' }}>
+          <button onClick={handleCTAClick} className="btn-primary" style={{ padding: '0.625rem 1.25rem', fontSize: '0.875rem' }}>
             <span>Start a project</span>
             <span className="hover-arrow">↗</span>
           </button>
@@ -143,7 +159,10 @@ export default function Navbar({ onOpenModal }) {
             <a
               key={link.name}
               href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleLinkClick(`mobile_${link.name}`);
+              }}
               style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: '1.125rem',
@@ -159,7 +178,7 @@ export default function Navbar({ onOpenModal }) {
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onOpenModal();
+                handleCTAClick();
               }}
               className="btn-primary"
               style={{ width: '100%' }}

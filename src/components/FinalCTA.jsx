@@ -1,6 +1,20 @@
 import React from 'react';
+import { trackCTAClick, trackContactChannelClick } from '../utils/analytics';
 
 export default function FinalCTA({ onOpenModal }) {
+  const handlePrimaryCTA = () => {
+    trackCTAClick('Start a project', 'final_cta');
+    onOpenModal();
+  };
+
+  const handleWhatsAppClick = () => {
+    trackContactChannelClick('whatsapp', 'final_cta');
+  };
+
+  const handleEmailClick = () => {
+    trackContactChannelClick('email', 'final_cta');
+  };
+
   return (
     <section
       id="contact"
@@ -57,7 +71,7 @@ export default function FinalCTA({ onOpenModal }) {
             }}
           >
             <button
-              onClick={onOpenModal}
+              onClick={handlePrimaryCTA}
               className="btn-primary"
               style={{ padding: '1rem 2.25rem', fontSize: '1rem' }}
             >
@@ -69,6 +83,7 @@ export default function FinalCTA({ onOpenModal }) {
               href="https://wa.me/917603833919?text=Hello%20Catane,%20I'd%20like%20to%20discuss%20a%20project%20for%20my%20business."
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleWhatsAppClick}
               className="btn-secondary"
               style={{ padding: '1rem 2.25rem', fontSize: '1rem' }}
             >
@@ -78,6 +93,7 @@ export default function FinalCTA({ onOpenModal }) {
 
             <a
               href="mailto:catane.labs@gmail.com?subject=Project%20Inquiry%20-%20Catane"
+              onClick={handleEmailClick}
               className="btn-secondary"
               style={{ padding: '1rem 2.25rem', fontSize: '1rem' }}
             >
@@ -91,3 +107,4 @@ export default function FinalCTA({ onOpenModal }) {
     </section>
   );
 }
+
